@@ -16,7 +16,7 @@ services:
     restart: always
     image: portainer/portainer:${SERVICE_PORTAINER_VERSION}
     volumes:
-      - ${SERVICE_DATA}/data:/data
+      - ${SERVICE_DATA}:/data
       - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
