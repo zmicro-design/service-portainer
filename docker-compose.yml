@@ -3,16 +3,14 @@ version: '3.7'
 services:
   portainer:
     restart: always
-    image: whatwewant/openresty-oauth2.0:${SERVICE_PORTAINER_OAUTH_VERSION}
+    image: whatwewant/connect-doreamon:v1
     environment:
-      PROXY_PASS: http://portainer-server:9000
-      ROOT_URL: https://${SERVICE_PORTAINER_DOMAIN}
-      PROVIDER: doreamon
-      CLIENT_ID: ${SERVICE_PORTAINER_DOREAMON_CLIENT_ID}
-      CLIENT_SECRET: ${SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET}
-      ALLOW_USERNAMES: ${SERVICE_PORTAINER_ALLOW_USERNAMES}
+      CLIENT_ID: ${SERVICE_PORTAINER_CLIENT_ID}
+      CLIENT_SECRET: ${SERVICE_PORTAINER_CLIENT_SECRET}
+      REDIRECT_URI: ${SERVICE_PORTAINER_REDIRECT_URI}
+      UPSTREAM: portainer_upstream:9000
 
-  portainer-server:
+  portainer_upstream:
     restart: always
     image: whatwewant/portainer:${SERVICE_PORTAINER_VERSION}
     volumes:

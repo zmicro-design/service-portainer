@@ -1,41 +1,20 @@
 #!/bin/bash
 
-load inquirer
+service::config_set() {
+  config::check_or_set $1 $2 $SERVICE_CONFIG "${@:3}"
+}
 
 check() {
-  if [ ! -f $SERVICE_CONFIG ]; then
-     touch $SERVICE_CONFIG
-  fi
-  config::load_file $SERVICE_CONFIG
-
-  if [ -z "$SERVICE_PORTAINER_DOMAIN" ]; then
-    inquirer::text "请输入 SERVICE_PORTAINER_DOMAIN:" value
-    config::set SERVICE_PORTAINER_DOMAIN $value $SERVICE_CONFIG
+  if [ "$DEBUG" = "true" ]; then
+    log::info "[DEBUG][service]: $SERVICE_CONFIG"
+    cat $SERVICE_CONFIG
   fi
 
-  if [ -z "$SERVICE_PORTAINER_DOREAMON_CLIENT_ID" ]; then
-    inquirer::text "请输入 SERVICE_PORTAINER_DOREAMON_CLIENT_ID:" value
-    config::set SERVICE_PORTAINER_DOREAMON_CLIENT_ID $value $SERVICE_CONFIG
-  fi
-
-  if [ -z "$SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET" ]; then
-    inquirer::text "请输入 SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET:" value
-    config::set SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET $value $SERVICE_CONFIG
-  fi
-
-  if [ -z "$SERVICE_PORTAINER_ALLOW_USERNAMES" ]; then
-    inquirer::text "请输入 SERVICE_PORTAINER_ALLOW_USERNAMES:" value
-    config::set SERVICE_PORTAINER_ALLOW_USERNAMES $value $SERVICE_CONFIG
-  fi
+  # service::config_set SERVICE_PORTAINER_PORT text "Port" 8024
   
-  # load again
-  config::load_file $SERVICE_CONFIG
-  
-  # @TODO
-  export SERVICE_PORTAINER_DOMAIN=$SERVICE_PORTAINER_DOMAIN
-  export SERVICE_PORTAINER_DOREAMON_CLIENT_ID=$SERVICE_PORTAINER_DOREAMON_CLIENT_ID
-  export SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET=$SERVICE_PORTAINER_DOREAMON_CLIENT_SECRET
-  export SERVICE_PORTAINER_ALLOW_USERNAMES=$SERVICE_PORTAINER_ALLOW_USERNAMES
+  service::config_set SERVICE_PORTAINER_CLIENT_ID text "Client ID"
+  service::config_set SERVICE_PORTAINER_CLIENT_SECRET text "Client Secret"
+  service::config_set SERVICE_PORTAINER_REDIRECT_URI text "Redirect URI"
 }
 
 check $@
