@@ -1,3 +1,3 @@
 NAME=portainer
-VERSION=v0.0.3
+VERSION=v1.2.0
 DESCRIPTION="Portainer Service"
