@@ -14,7 +14,7 @@ services:
 
   portainer-server:
     restart: always
-    image: portainer/portainer:${SERVICE_PORTAINER_VERSION}
+    image: whatwewant/portainer:${SERVICE_PORTAINER_VERSION}
     volumes:
       - ${SERVICE_DATA}:/data
       - /var/run/docker.sock:/var/run/docker.sock
