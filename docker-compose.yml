@@ -9,6 +9,8 @@ services:
       CLIENT_SECRET: ${SERVICE_PORTAINER_CLIENT_SECRET}
       REDIRECT_URI: ${SERVICE_PORTAINER_REDIRECT_URI}
       UPSTREAM: portainer_upstream:9000
+      # @TODO
+      BUILT_IN_APIS_USERS: /_/users
 
   portainer_upstream:
     restart: always
